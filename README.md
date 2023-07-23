@@ -8,6 +8,10 @@ API gateway for multiple projects:
 
 ### Auth: 
   * API for auth 
+
+## Tech stack
+* [Nestjs](https://docs.nestjs.com/) framework (TS) powered with [Fastify](https://fastify.dev/)
+* 
 ## Installation
 
 ```bash
