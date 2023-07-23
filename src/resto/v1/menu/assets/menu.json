@@ -1,0 +1,96 @@
+[
+  {
+    "groupId": 1,
+    "name": "APPETIZERS",
+    "description": "",
+    "items": [
+      {
+        "id": 1,
+        "name": "AP1. Fried chicken - Fresh spring rolls 4 pc",
+        "description": "carrot, cucumber, rice noodles, fried garlic, fried onion",
+        "price": "9.35",
+        "code": "AP1",
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp",
+        "active": true,
+        "images": [{ "url": "", "size": "" }],
+        "ingredients": [{ "id": "", "amount": 0, "unit": "pcs" }],
+        "meta": {
+          "keywords": [
+            "Fresh spring rolls",
+            "fried chicken",
+            "chicken",
+            "spring rolls"
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "name": "AP2. Red Pork - Fresh spring rolls 4 pc",
+        "description": "carrot, cucumber, rice noodles, fried garlic, fried onion",
+        "price": "9.35",
+        "code": "AP2",
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp",
+        "active": true,
+        "images": [{ "url": "", "size": "" }],
+        "ingredients": [{ "id": "", "amount": 0, "unit": "pcs" }],
+        "meta": {
+          "keywords": [
+            "Fresh spring rolls",
+            "red pork",
+            "chicken",
+            "spring rolls"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "groupId": 2,
+    "name": "SOUPS",
+    "description": "",
+    "items": [
+      {
+        "id": 3,
+        "name": "S1. Braised Pork Noodle Soup",
+        "description": "",
+        "price": "11.55",
+        "code": "AP1",
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp",
+        "active": true,
+        "images": [{ "url": "", "size": "" }],
+        "ingredients": [{ "id": "", "amount": 0, "unit": "pcs" }],
+        "meta": {
+          "keywords": [
+            "Braised pork",
+            "pork",
+            "soup",
+            "Noodle Soup"
+          ]
+        }
+      },
+      {
+        "id": 4,
+        "name": "S2. Braised Beef Noodle Soup",
+        "description": "",
+        "price": "12.55",
+        "code": "AP2",
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp",
+        "active": true,
+        "images": [{ "url": "", "size": "" }],
+        "ingredients": [{ "id": "", "amount": 0, "unit": "pcs" }],
+        "meta": {
+          "keywords": [
+            "Braised beef",
+            "beef",
+            "soup",
+            "Noodle Soup"
+          ]
+        }
+      }
+    ]
+  }
+]
