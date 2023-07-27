@@ -2,10 +2,10 @@ module.exports = module.exports = {
   apps: [
     {
       name: 'tf-api',
-      script: 'run start:prod',
+      script: 'npm run start:prod',
       watch: true,
       env: {
-        NODE_ENV: 'production',
+        NODE_ENV: 'prod',
         DEBUG: '${DEBUG}',
       },
       // Delay between restart
