@@ -6,7 +6,7 @@ export class MenuController {
   constructor(private readonly menuService: MenuService) {}
   @Header('Cache-Control', 'public, max-age=604800')
   @Get()
-  findAll() {
-    return { data: this.menuService.findAll(), message: 'Done!' };
+  async findAll() {
+    return { data: await this.menuService.findAll(), message: 'Done!' };
   }
 }

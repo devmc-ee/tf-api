@@ -4,6 +4,7 @@ import {
   IsPositive,
   IsString,
   IsBoolean,
+  IsOptional,
 } from 'class-validator';
 
 export class CreateMenuItemDto {
@@ -17,6 +18,7 @@ export class CreateMenuItemDto {
   @IsNotEmpty()
   name: string;
 
+  @IsOptional()
   @IsString()
   description: string;
 
