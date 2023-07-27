@@ -5,7 +5,7 @@ module.exports = module.exports = {
       script: 'run start:prod',
       watch: true,
       env: {
-        NODE_ENV: 'prod',
+        NODE_ENV: 'production',
         DEBUG: '${DEBUG}',
       },
       // Delay between restart
