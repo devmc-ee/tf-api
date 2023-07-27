@@ -39,3 +39,12 @@ lerna-debug.log*
 /logs
 ecosystem.config.js
 ecosystem.config.prod.js
+
+# env
+.env.dev
+.env.prod
+.env.production
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

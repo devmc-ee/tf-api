@@ -20,6 +20,6 @@ async function bootstrap() {
       },
     }),
   );
-  await app.listen(5003);
+  await app.listen(Number.parseInt(process.env.PORT) || 5003);
 }
 bootstrap();

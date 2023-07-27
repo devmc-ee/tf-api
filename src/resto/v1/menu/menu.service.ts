@@ -1,9 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import * as menu from './assets/menu.json';
+import { InjectModel } from '@nestjs/mongoose';
+import { Menu } from './entities/menu.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class MenuService {
-  findAll() {
-    return menu;
+  constructor(
+    @InjectModel(Menu.name) private readonly menuModel: Model<Menu>,
+  ) {}
+  findAll(): Promise<Menu[]> {
+    return this.menuModel.find().exec();
   }
 }
