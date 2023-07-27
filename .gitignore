@@ -37,8 +37,6 @@ lerna-debug.log*
 
 .mongo_db
 /logs
-ecosystem.config.js
-ecosystem.config.prod.js
 
 # env
 .env.dev
