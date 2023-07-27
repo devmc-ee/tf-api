@@ -8,5 +8,6 @@ export default () => ({
     params: process.env.MONGO_URI_PARAMS,
     protocol: process.env.MONGO_PROTOCOL,
   },
+  mongoUriDev: '',
   mongoUri: `${process.env.MONGO_PROTOCOL}://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_URI}/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
 });
