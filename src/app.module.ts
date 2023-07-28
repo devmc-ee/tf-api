@@ -7,11 +7,11 @@ import { MenuItemModule } from './resto/v1/menu-item/menu-item.module';
 import { MenuGroupModule } from './resto/v1/menu-group/menu-group.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/config';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `./.env.${process.env.NODE_ENV}`,
+      ignoreEnvVars: true,
+      envFilePath: `./.env.${process.env.NODE_ENV || 'dev'}`,
       isGlobal: true,
       load: [configuration],
     }),
@@ -19,7 +19,7 @@ import configuration from './config/config';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('mongoUri'),
+        uri:  configService.get<string>('mongoUri'),
       }),
       inject: [ConfigService],
     }),

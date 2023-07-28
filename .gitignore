@@ -39,7 +39,7 @@ lerna-debug.log*
 /logs
 
 # env
-.env.dev
+#.env.dev docker
 .env.prod
 .env.production
 .env.local
