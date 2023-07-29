@@ -8,15 +8,15 @@ import {
   Delete,
 } from '@nestjs/common';
 import { MenuItemService } from './menu-item.service';
-import { CreateMenuItemDto } from './dto/create-menu-item.dto';
-import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
+import { MenuItemCreateDto } from './dtos/create.dto';
+import { UpdateMenuItemDto } from './dtos/update.dto';
 
 @Controller('resto/v1/menu-items')
 export class MenuItemController {
   constructor(private readonly menuItemService: MenuItemService) {}
 
   @Post()
-  create(@Body() createMenuItemDto: CreateMenuItemDto) {
+  create(@Body() createMenuItemDto: MenuItemCreateDto) {
     return this.menuItemService.create(createMenuItemDto);
   }
 

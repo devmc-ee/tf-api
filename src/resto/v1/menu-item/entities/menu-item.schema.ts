@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, InferSchemaType } from 'mongoose';
+import { IMenuItem } from '../menu-item.type';
 
 export type MenuItemDocument = HydratedDocument<MenuItem>;
 
 @Schema()
-export class MenuItem {
+export class MenuItem implements IMenuItem{
   @Prop({ required: true })
   name: string;
   @Prop()

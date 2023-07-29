@@ -1,8 +1,8 @@
 version: "3.9"
 
 services:
-  tf-api:
-    container_name: tf-api
+  tf_api:
+    container_name: tf_api
     working_dir: /usr/src/app
     build: 
       context: .
@@ -13,19 +13,19 @@ services:
       - "5003:5003"
     volumes:
       - app:/usr/src/app
-      - node_modules:/app/node_modules
+      - node_modules:/usr/src/app/node_modules
     depends_on:
       - "mongo"
     restart: on-failure
     networks:
-      - tf-api
+      - tf_api
   mongo:
     image: mongo
     ports:
       - "27017:27017"
     container_name: mongo
     networks:
-      - tf-api
+      - tf_api
 
 volumes:
   node_modules:
@@ -42,4 +42,4 @@ volumes:
       device: ./
 
 networks:
-  tf-api:
+  tf_api:

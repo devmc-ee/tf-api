@@ -5,8 +5,9 @@ import {
   IsString,
   IsBoolean,
 } from 'class-validator';
+import { IMenuItem } from '../menu-item.type';
 
-export class CreateMenuItemDto {
+export class MenuItemCreateDto implements IMenuItem {
   @IsBoolean()
   hidden: boolean;
 
