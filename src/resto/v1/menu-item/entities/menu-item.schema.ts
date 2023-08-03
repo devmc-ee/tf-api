@@ -5,7 +5,11 @@ import { MODEL_NAME } from 'src/config/model.type';
 
 export type MenuItemDocument = HydratedDocument<MenuItem>;
 
-@Schema({ versionKey: false, collection: MODEL_NAME.MENU_ITEM })
+@Schema({
+  versionKey: false,
+  collection: MODEL_NAME.MENU_ITEM,
+  timestamps: true,
+})
 export class MenuItem implements IMenuItemModel {
   @Prop({ required: true })
   name: string;

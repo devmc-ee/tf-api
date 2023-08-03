@@ -15,6 +15,10 @@ export class MenuItemResponseDto implements IMenuItemResponse {
   price: string;
   code: string;
   groupId: string;
+  @Exclude()
+  createdAt: string;
+  @Exclude()
+  updatedAt: string;
 
   @Expose({ name: 'id' })
   toId() {
