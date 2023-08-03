@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 import { MenuItem } from '../menu-item/entities/menu-item.schema';
 import { MenuGroup } from '../menu-group/entities/menu-group.schema';
 import { MenuItemResponseDto } from '../menu-item/dtos/response.dto';
+import { ResponseMenuDto } from './dto/response-menu.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MenuService {
@@ -11,6 +13,7 @@ export class MenuService {
     @InjectModel(MenuItem.name) private readonly menuItemModel: Model<MenuItem>,
     @InjectModel(MenuGroup.name)
     private readonly menuGroupModel: Model<MenuGroup>,
+    private config: ConfigService,
   ) {}
   async findAll() {
     const menuGroups = await this.menuGroupModel.find().exec();
@@ -22,9 +25,20 @@ export class MenuService {
           .filter(({ groupId, hidden }) => {
             return groupId.toString() === group._id.toString() && !hidden;
           })
-          .map((item) => new MenuItemResponseDto(item.toObject()));
+          .map((item) => {
+            const menuItem = item.toObject();
 
-        return { ...group.toObject(), items: filteredItems };
+            menuItem.price = Number.parseFloat(menuItem.price).toFixed(
+              this.config.get('prices.precision'),
+            );
+
+            return new MenuItemResponseDto(menuItem);
+          });
+
+        return new ResponseMenuDto({
+          ...group.toObject(),
+          items: filteredItems,
+        });
       })
       .filter(({ items }) => items.length > 0);
   }

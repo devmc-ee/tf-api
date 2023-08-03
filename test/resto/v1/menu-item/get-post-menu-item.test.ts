@@ -63,6 +63,7 @@ describe(`GET POST ${MENU_ITEMS_URL}`, () => {
     expect(response.body).to.have.property('id');
     expect(response.body).includes({
       ...menuItem,
+      price: '10.00',
       groupId: menuItem.groupId.toString(),
     });
 
@@ -71,6 +72,7 @@ describe(`GET POST ${MENU_ITEMS_URL}`, () => {
     expect(response.body.length).to.be.greaterThan(0);
     expect(response.body[0]).includes({
       ...menuItem,
+      price: '10.00',
       groupId: menuItem.groupId.toString(),
     });
 

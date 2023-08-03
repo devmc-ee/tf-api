@@ -10,6 +10,7 @@ import {
   MenuGroup,
   MenuGroupSchema,
 } from '../menu-group/entities/menu-group.schema';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import {
     MongooseModule.forFeature([
       { name: MenuGroup.name, schema: MenuGroupSchema },
     ]),
+    ConfigModule,
   ],
   controllers: [MenuController],
   providers: [MenuService],

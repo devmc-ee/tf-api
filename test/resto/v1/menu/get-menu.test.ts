@@ -52,21 +52,30 @@ describe(`GET POST ${MENU_URL}`, () => {
             groupId: groups.insertedIds['0'],
           },
           {
-            name: 'Item1',
+            name: 'Item2',
             description: '',
             hidden: false,
             soldOut: false,
-            price: '10',
+            price: '9.5',
             code: 'code2',
             groupId: groups.insertedIds['1'],
           },
           {
             name: 'Item3',
             description: '',
+            hidden: false,
+            soldOut: false,
+            price: '7.42',
+            code: 'code3',
+            groupId: groups.insertedIds['1'],
+          },
+          {
+            name: 'Item4',
+            description: '',
             hidden: true,
             soldOut: false,
             price: '10',
-            code: 'code3',
+            code: 'code4',
             groupId: groups.insertedIds['1'],
           },
         ],
@@ -85,7 +94,13 @@ describe(`GET POST ${MENU_URL}`, () => {
     const appetizersCategory = body.find(({ name }) => name === 'Appetizers');
     const riceCategory = body.find(({ name }) => name === 'Rice');
 
+    expect(Object.keys(soupsCategory).length).equals(4);
     expect(soupsCategory).to.have.property('items');
+    expect(soupsCategory).includes({
+      name: 'Soups',
+      description: '',
+    });
+    expect(soupsCategory).to.have.property('id');
 
     expect(soupsCategory.items.length).equals(1);
     expect(soupsCategory.items[0]).includes({
@@ -93,14 +108,42 @@ describe(`GET POST ${MENU_URL}`, () => {
       description: '',
       hidden: false,
       soldOut: false,
-      price: '10',
+      price: '10.00',
       code: 'code',
       groupId: groups.insertedIds['0'].toString(),
     });
     expect(soupsCategory.items[0]).to.have.property('id');
+    expect(typeof soupsCategory.items[0].id).equals('string');
 
     expect(appetizersCategory).to.have.property('items');
-    expect(appetizersCategory.items.length).equals(1);
+    expect(appetizersCategory.items.length).equals(2);
+
+    const appetizerItem2 = appetizersCategory.items.find(
+      ({ code }) => code === 'code2',
+    );
+    expect(appetizerItem2).includes({
+      name: 'Item2',
+      description: '',
+      hidden: false,
+      soldOut: false,
+      price: '9.50',
+      code: 'code2',
+      groupId: groups.insertedIds['1'].toString(),
+    });
+
+    const appetizerItem3 = appetizersCategory.items.find(
+      ({ code }) => code === 'code3',
+    );
+
+    expect(appetizerItem3).includes({
+      name: 'Item3',
+      description: '',
+      hidden: false,
+      soldOut: false,
+      price: '7.42',
+      code: 'code3',
+      groupId: groups.insertedIds['1'].toString(),
+    });
 
     expect(!!riceCategory, 'should be undefined').equals(false);
   });
