@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MenuModule } from './resto/v1/menu/menu.module';
@@ -7,6 +7,7 @@ import { MenuItemModule } from './resto/v1/menu-item/menu-item.module';
 import { MenuGroupModule } from './resto/v1/menu-group/menu-group.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,7 +20,9 @@ import configuration from './config/config';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri:  configService.get<string>('mongoUri'),
+        uri: configService.get<string>('mongoUri'),
+        autoIndex: true,
+        autoCreate: true,
       }),
       inject: [ConfigService],
     }),
@@ -28,6 +31,12 @@ import configuration from './config/config';
     ConfigModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
+    },
+  ],
 })
 export class AppModule {}

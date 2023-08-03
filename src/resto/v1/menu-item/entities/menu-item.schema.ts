@@ -1,11 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument, InferSchemaType } from 'mongoose';
-import { IMenuItem } from '../menu-item.type';
+import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
+import { IMenuItemModel } from '../menu-item.type';
+import { MODEL_NAME } from 'src/config/model.type';
 
 export type MenuItemDocument = HydratedDocument<MenuItem>;
 
-@Schema()
-export class MenuItem implements IMenuItem{
+@Schema({ versionKey: false, collection: MODEL_NAME.MENU_ITEM })
+export class MenuItem implements IMenuItemModel {
   @Prop({ required: true })
   name: string;
   @Prop()
@@ -14,16 +15,16 @@ export class MenuItem implements IMenuItem{
   hidden: boolean;
   @Prop({ required: true })
   soldOut: boolean;
-  @Prop({ required: true })
-  price: number;
+  @Prop({ required: true, type: String })
+  price: string;
   @Prop({ required: true, unique: true, index: true })
   code: string;
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'MenuGroup',
+    ref: MODEL_NAME.MENU_GROUP,
   })
-  groupId: string;
+  groupId: ObjectId;
 }
 
 export const MenuItemSchema = SchemaFactory.createForClass(MenuItem);

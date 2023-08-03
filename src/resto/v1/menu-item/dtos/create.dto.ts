@@ -1,13 +1,14 @@
 import {
   IsNotEmpty,
-  IsNumber,
   IsPositive,
   IsString,
   IsBoolean,
+  IsNumber,
 } from 'class-validator';
-import { IMenuItem } from '../menu-item.type';
+import { IMenuItemRequest } from '../menu-item.type';
+import { Type } from 'class-transformer';
 
-export class MenuItemCreateDto implements IMenuItem {
+export class MenuItemCreateDto implements IMenuItemRequest {
   @IsBoolean()
   hidden: boolean;
 
@@ -21,15 +22,15 @@ export class MenuItemCreateDto implements IMenuItem {
   @IsString()
   description: string;
 
+  @Type(() => Number)
   @IsNumber()
   @IsPositive()
-  price: number;
+  price: string;
 
   @IsString()
   @IsNotEmpty()
   code: string;
 
   @IsString()
-  @IsNotEmpty()
   groupId: string;
 }

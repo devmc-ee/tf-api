@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMenuGroupDto } from './dto/create-menu-group.dto';
-import { UpdateMenuGroupDto } from './dto/update-menu-group.dto';
+import { CreateMenuGroupDto } from './dtos/create-menu-group.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { MenuGroup } from './entities/menu-group.schema';
 import { Model } from 'mongoose';
+import { ResponseMenuGroupDto } from './dtos/response-menu-group.dto';
 
 @Injectable()
 export class MenuGroupService {
@@ -12,21 +12,20 @@ export class MenuGroupService {
     private readonly menuGroupModel: Model<MenuGroup>,
   ) {}
   async create(createMenuGroupDto: CreateMenuGroupDto): Promise<MenuGroup> {
-    const newMenuGroup = new this.menuGroupModel(createMenuGroupDto);
+    const newMenuGroupDocument = new this.menuGroupModel(createMenuGroupDto);
 
-    return newMenuGroup.save();
+    const newMenuGroup = await newMenuGroupDocument.save();
+
+    return new ResponseMenuGroupDto(newMenuGroup.toObject());
   }
 
-  findAll() {
-    return this.menuGroupModel.find().exec();
+  async findAll(): Promise<ResponseMenuGroupDto[]> {
+    const groups = await this.menuGroupModel.find().exec();
+    return groups.map((group) => new ResponseMenuGroupDto(group.toObject()));
   }
 
   findOne(id: number) {
     return `This action returns a #${id} menuGroup`;
-  }
-
-  update(id: number, updateMenuGroupDto: UpdateMenuGroupDto) {
-    return `This action updates a #${id} menuGroup`;
   }
 
   remove(id: number) {

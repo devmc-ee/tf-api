@@ -6,8 +6,7 @@ export class UpdateMenuItemDto extends PartialType(MenuItemCreateDto) {
   description: string;
   hidden: boolean;
   soldOut: boolean;
-  price: number;
+  price: string;
   code: string;
   groupId: string;
-
 }

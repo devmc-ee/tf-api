@@ -7,6 +7,6 @@ export class MenuController {
   @Header('Cache-Control', 'public, max-age=604800')
   @Get()
   async findAll() {
-    return { data: await this.menuService.findAll(), message: 'Done!' };
+    return await this.menuService.findAll();
   }
 }

@@ -29,17 +29,17 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# Makefile
+make up-build
 ```
 
 ## Test
 
 ```bash
-# unit tests
-$ npm run test
+# build test
+make up-test-build
+# all tests in another terminal
+make tests
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```

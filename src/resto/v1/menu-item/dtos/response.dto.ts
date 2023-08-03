@@ -1,16 +1,28 @@
+import { Exclude, Expose } from 'class-transformer';
 import { MenuItemDocument } from '../entities/menu-item.schema';
-import { IMenuItem } from '../menu-item.type';
+import { IMenuItemResponse } from '../menu-item.type';
+import { ObjectId } from 'mongoose';
 
-export class MenuItemResponseDto implements IMenuItem {
+export class MenuItemResponseDto implements IMenuItemResponse {
+  @Exclude() // exposed
+  id: string;
+  @Exclude()
+  _id: ObjectId;
   name: string;
   description: string;
   hidden: boolean;
   soldOut: boolean;
-  price: number;
+  price: string;
   code: string;
   groupId: string;
-  
-  constructor(menuItem: MenuItemDocument) {
+
+  @Expose({ name: 'id' })
+  toId() {
+    return this._id.toString();
+  }
+  constructor(menuItem: Partial<MenuItemDocument>) {
     Object.assign(this, menuItem);
+
+    this.groupId = menuItem.groupId.toString();
   }
 }
