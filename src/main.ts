@@ -9,12 +9,17 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { MenuModule } from './resto/v1/menu/menu.module';
 import { MenuGroupModule } from './resto/v1/menu-group/menu-group.module';
 import { MenuItemModule } from './resto/v1/menu-item/menu-item.module';
+import { fastifyHelmet as helmet } from '@fastify/helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter({ logger: true }),
   );
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore mismatch interface
+  await app.register(helmet, { global: true });
 
   app.useGlobalPipes(
     new ValidationPipe({

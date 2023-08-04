@@ -17,6 +17,8 @@
     "test:mocha": "docker exec -it tf_api_test npx mocha -r ts-node/register test/**/*.test.ts --timeout=5000  --recursive --exit"
   },
   "dependencies": {
+    "@fastify/cors": "^8.3.0",
+    "@fastify/helmet": "^11.0.0",
     "@fastify/static": "^6.10.2",
     "@nestjs/common": "^10.1.0",
     "@nestjs/config": "^3.0.0",
