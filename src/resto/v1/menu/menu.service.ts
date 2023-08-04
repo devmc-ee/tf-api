@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MenuItem } from '../menu-item/entities/menu-item.schema';
 import { MenuGroup } from '../menu-group/entities/menu-group.schema';
-import { MenuItemResponseDto } from '../menu-item/dtos/response.dto';
+import { ResponseMenuItemDto } from '../menu-item/dtos/response-menu-item.dto';
 import { ResponseMenuDto } from './dto/response-menu.dto';
 import { ConfigService } from '@nestjs/config';
 
@@ -32,7 +32,7 @@ export class MenuService {
               this.config.get('prices.precision'),
             );
 
-            return new MenuItemResponseDto(menuItem);
+            return new ResponseMenuItemDto(menuItem);
           });
 
         return new ResponseMenuDto({

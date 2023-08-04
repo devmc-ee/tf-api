@@ -11,7 +11,9 @@ export class MenuGroupService {
     @InjectModel(MenuGroup.name)
     private readonly menuGroupModel: Model<MenuGroup>,
   ) {}
-  async create(createMenuGroupDto: CreateMenuGroupDto): Promise<MenuGroup> {
+  async create(
+    createMenuGroupDto: CreateMenuGroupDto,
+  ): Promise<ResponseMenuGroupDto> {
     const newMenuGroupDocument = new this.menuGroupModel(createMenuGroupDto);
 
     const newMenuGroup = await newMenuGroupDocument.save();

@@ -1,7 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { MenuItemCreateDto } from './create.dto';
+import { PartialType } from '@nestjs/swagger';
+import { CreateMenuItemDto } from './create-menu-item.dto';
 
-export class UpdateMenuItemDto extends PartialType(MenuItemCreateDto) {
+export class UpdateMenuItemDto extends PartialType(CreateMenuItemDto) {
   name: string;
   description: string;
   hidden: boolean;

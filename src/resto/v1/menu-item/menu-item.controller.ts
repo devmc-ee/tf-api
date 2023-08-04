@@ -3,25 +3,27 @@ import {
   Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
   Req,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
 import { MenuItemService } from './menu-item.service';
-import { MenuItemCreateDto } from './dtos/create.dto';
-import { UpdateMenuItemDto } from './dtos/update.dto';
+import { CreateMenuItemDto } from './dtos/create-menu-item.dto';
 import { FastifyRequest } from 'fastify';
+import { ApiResponse } from '@nestjs/swagger';
+import { ResponseMenuItemDto } from './dtos/response-menu-item.dto';
 
 @Controller('resto/v1/menu-items')
 export class MenuItemController {
   constructor(private readonly menuItemService: MenuItemService) {}
-
+  @ApiResponse({
+    status: 201,
+    description: '',
+    type: ResponseMenuItemDto,
+  })
   @Post()
   async create(
-    @Body() createMenuItemDto: MenuItemCreateDto,
+    @Body() createMenuItemDto: CreateMenuItemDto,
     @Req() req: FastifyRequest,
   ) {
     try {
@@ -38,26 +40,13 @@ export class MenuItemController {
     }
   }
 
+  @ApiResponse({
+    status: 200,
+    description: '',
+    type: [ResponseMenuItemDto],
+  })
   @Get()
   findAll() {
     return this.menuItemService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.menuItemService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateMenuItemDto: UpdateMenuItemDto,
-  ) {
-    return this.menuItemService.update(+id, updateMenuItemDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.menuItemService.remove(+id);
   }
 }

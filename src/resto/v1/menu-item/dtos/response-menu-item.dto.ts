@@ -2,23 +2,38 @@ import { Exclude, Expose } from 'class-transformer';
 import { MenuItemDocument } from '../entities/menu-item.schema';
 import { IMenuItemResponse } from '../menu-item.type';
 import { ObjectId } from 'mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class MenuItemResponseDto implements IMenuItemResponse {
+export class ResponseMenuItemDto implements IMenuItemResponse {
+  @ApiProperty()
   @Exclude() // exposed
   id: string;
-  @Exclude()
-  _id: ObjectId;
+
+  @ApiProperty()
   name: string;
+  @ApiProperty()
   description: string;
-  hidden: boolean;
+  @ApiProperty()
   soldOut: boolean;
+  @ApiProperty({
+    description: 'Price with . decimal separator',
+  })
   price: string;
+  @ApiProperty({
+    description: 'Unique menu item code',
+  })
   code: string;
+  @ApiProperty()
   groupId: string;
+
+  @Exclude()
+  hidden: boolean;
   @Exclude()
   createdAt: string;
   @Exclude()
   updatedAt: string;
+  @Exclude()
+  _id: ObjectId;
 
   @Expose({ name: 'id' })
   toId() {

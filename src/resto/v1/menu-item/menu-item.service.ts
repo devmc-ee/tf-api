@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { MenuItemCreateDto } from './dtos/create.dto';
+import { CreateMenuItemDto } from './dtos/create-menu-item.dto';
 import { UpdateMenuItemDto } from './dtos/update.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { MenuItem } from './entities/menu-item.schema';
 import { Model } from 'mongoose';
-import { MenuItemResponseDto } from './dtos/response.dto';
+import { ResponseMenuItemDto } from './dtos/response-menu-item.dto';
 import { IMenuItemResponse } from './menu-item.type';
 import { ConfigService } from '@nestjs/config';
 
@@ -15,7 +15,7 @@ export class MenuItemService {
     private config: ConfigService,
   ) {}
   async create(
-    createMenuItemDto: MenuItemCreateDto,
+    createMenuItemDto: CreateMenuItemDto,
   ): Promise<IMenuItemResponse> {
     createMenuItemDto.price = Number.parseFloat(
       createMenuItemDto.price,
@@ -24,13 +24,13 @@ export class MenuItemService {
     const newMenuItem = new this.menuItemModel(createMenuItemDto);
     const menuItemDoc = await newMenuItem.save();
 
-    return new MenuItemResponseDto(menuItemDoc.toObject());
+    return new ResponseMenuItemDto(menuItemDoc.toObject());
   }
 
-  async findAll(): Promise<IMenuItemResponse[]> {
+  async findAll(): Promise<ResponseMenuItemDto[]> {
     const menuItems = await this.menuItemModel.find().exec();
     return menuItems.map(
-      (menuItemDoc) => new MenuItemResponseDto(menuItemDoc.toObject()),
+      (menuItemDoc) => new ResponseMenuItemDto(menuItemDoc.toObject()),
     );
   }
 
