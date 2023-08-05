@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, ObjectId } from 'mongoose';
 import { IMenuGroup } from '../menu-group.type';
-import { MODEL_NAME } from 'src/config/model.type';
+import { MODEL_NAME } from 'src/model.type';
 
 export type MenuGroupDocument = HydratedDocument<MenuGroup>;
 

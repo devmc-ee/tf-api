@@ -6,7 +6,7 @@ import {
   insertData,
 } from '../../../utils/dbHelper';
 import { requester } from '../../../utils/requester';
-import { MODEL_NAME } from '../../../../src/config/model.type';
+import { MODEL_NAME } from '../../../../src/model.type';
 import mongoose from 'mongoose';
 import { IMenuGroup } from '../../../../src/resto/v1/menu-group/menu-group.type';
 import { IMenuItemModel } from 'src/resto/v1/menu-item/menu-item.type';
@@ -106,7 +106,6 @@ describe(`GET POST ${MENU_URL}`, () => {
     expect(soupsCategory.items[0]).includes({
       name: 'Item1',
       description: '',
-      hidden: false,
       soldOut: false,
       price: '10.00',
       code: 'code',
@@ -124,7 +123,6 @@ describe(`GET POST ${MENU_URL}`, () => {
     expect(appetizerItem2).includes({
       name: 'Item2',
       description: '',
-      hidden: false,
       soldOut: false,
       price: '9.50',
       code: 'code2',
@@ -138,7 +136,6 @@ describe(`GET POST ${MENU_URL}`, () => {
     expect(appetizerItem3).includes({
       name: 'Item3',
       description: '',
-      hidden: false,
       soldOut: false,
       price: '7.42',
       code: 'code3',

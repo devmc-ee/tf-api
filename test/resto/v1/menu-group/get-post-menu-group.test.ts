@@ -2,7 +2,7 @@ import { before, after } from 'mocha';
 import { expect } from 'chai';
 import { closeConn, connectDbAndClear } from '../../../utils/dbHelper';
 import { requester } from '../../../utils/requester';
-import { MODEL_NAME } from '../../../../src/config/model.type';
+import { MODEL_NAME } from '../../../../src/model.type';
 
 const MENU_GROUPS_URL = '/resto/v1/menu-groups';
 
@@ -14,9 +14,9 @@ describe(`GET and POST ${MENU_GROUPS_URL}`, () => {
   });
 
   it('should create menu group and return a list', async () => {
-    await requester.get(MENU_GROUPS_URL).expect(200).expect([]);
+    let response = await requester.get(MENU_GROUPS_URL).expect(200).expect([]);
 
-    let response = await requester.post(MENU_GROUPS_URL).send({
+    response = await requester.post(MENU_GROUPS_URL).send({
       name: 'Soups',
       description: '',
     });

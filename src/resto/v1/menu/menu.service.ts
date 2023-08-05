@@ -5,7 +5,7 @@ import { MenuItem } from '../menu-item/entities/menu-item.schema';
 import { MenuGroup } from '../menu-group/entities/menu-group.schema';
 import { ResponseMenuItemDto } from '../menu-item/dtos/response-menu-item.dto';
 import { ResponseMenuDto } from './dto/response-menu.dto';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService } from 'src/config/config.service';
 
 @Injectable()
 export class MenuService {
@@ -13,7 +13,7 @@ export class MenuService {
     @InjectModel(MenuItem.name) private readonly menuItemModel: Model<MenuItem>,
     @InjectModel(MenuGroup.name)
     private readonly menuGroupModel: Model<MenuGroup>,
-    private config: ConfigService,
+    private configService: ConfigService,
   ) {}
   async findAll() {
     const menuGroups = await this.menuGroupModel.find().exec();
@@ -29,7 +29,7 @@ export class MenuService {
             const menuItem = item.toObject();
 
             menuItem.price = Number.parseFloat(menuItem.price).toFixed(
-              this.config.get('prices.precision'),
+              this.configService.config.prices.precision,
             );
 
             return new ResponseMenuItemDto(menuItem);

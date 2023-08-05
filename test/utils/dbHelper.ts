@@ -1,13 +1,11 @@
 import mongoose from 'mongoose';
-
-import config from '../../src/config/config';
 import envGuard from './envGuard';
-import { MODEL_NAME } from 'src/config/model.type';
+import { MODEL_NAME } from 'src/model.type';
 
 envGuard();
 
 export const connectDbAndClear = async (...modelClearList: MODEL_NAME[]) => {
-  const { mongoUri } = config();
+  const mongoUri = process.env.MONGO_FULL_URI;
 
   console.log(`Connect to: ${mongoUri}`);
 

@@ -5,22 +5,21 @@ import { MenuModule } from './resto/v1/menu/menu.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MenuItemModule } from './resto/v1/menu-item/menu-item.module';
 import { MenuGroupModule } from './resto/v1/menu-group/menu-group.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import configuration from './config/config';
+// import {  ConfigService } from '@nestjs/config';
+// import configuration from './config/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ConfigModule } from './config/config.module';
+import { ConfigService } from './config/config.service';
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      ignoreEnvVars: true,
+    ConfigModule.register({
       envFilePath: `./.env.${process.env.NODE_ENV || 'dev'}`,
-      isGlobal: true,
-      load: [configuration],
     }),
     MenuModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('mongoUri'),
+        uri: configService.config.mongoUri,
         autoIndex: true,
         autoCreate: true,
       }),

@@ -6,20 +6,20 @@ import { MenuItem } from './entities/menu-item.schema';
 import { Model } from 'mongoose';
 import { ResponseMenuItemDto } from './dtos/response-menu-item.dto';
 import { IMenuItemResponse } from './menu-item.type';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService } from 'src/config/config.service';
 
 @Injectable()
 export class MenuItemService {
   constructor(
     @InjectModel(MenuItem.name) private menuItemModel: Model<MenuItem>,
-    private config: ConfigService,
+    private configService: ConfigService,
   ) {}
   async create(
     createMenuItemDto: CreateMenuItemDto,
   ): Promise<IMenuItemResponse> {
     createMenuItemDto.price = Number.parseFloat(
       createMenuItemDto.price,
-    ).toFixed(this.config.get('prices.precision'));
+    ).toFixed(this.configService.config.prices.precision);
 
     const newMenuItem = new this.menuItemModel(createMenuItemDto);
     const menuItemDoc = await newMenuItem.save();

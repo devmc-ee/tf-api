@@ -6,7 +6,7 @@ import {
   insertData,
 } from '../../../utils/dbHelper';
 import { requester } from '../../../utils/requester';
-import { MODEL_NAME } from '../../../../src/config/model.type';
+import { MODEL_NAME } from '../../../../src/model.type';
 import mongoose from 'mongoose';
 import { IMenuGroup } from '../../../../src/resto/v1/menu-group/menu-group.type';
 import { MenuGroupSchema } from '../../../../src/resto/v1/menu-group/entities/menu-group.schema';
@@ -55,26 +55,23 @@ describe(`GET POST ${MENU_ITEMS_URL}`, () => {
   });
 
   it('should create menu items and return a list', async () => {
+    const menuItemResponse = { ...menuItem };
+    delete menuItemResponse.hidden;
+    menuItemResponse.price = '10.00';
+    menuItemResponse.groupId = menuItem.groupId.toString();
+
     await requester.get(MENU_ITEMS_URL).expect(200).expect([]);
 
     let response = await requester.post(MENU_ITEMS_URL).send(menuItem);
     expect(response.statusCode).equals(201);
 
     expect(response.body).to.have.property('id');
-    expect(response.body).includes({
-      ...menuItem,
-      price: '10.00',
-      groupId: menuItem.groupId.toString(),
-    });
+    expect(response.body).includes(menuItemResponse);
 
     response = await requester.get(MENU_ITEMS_URL).expect(200);
 
     expect(response.body.length).to.be.greaterThan(0);
-    expect(response.body[0]).includes({
-      ...menuItem,
-      price: '10.00',
-      groupId: menuItem.groupId.toString(),
-    });
+    expect(response.body[0]).includes(menuItemResponse);
 
     expect(
       response.body[0],
