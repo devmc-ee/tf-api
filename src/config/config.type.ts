@@ -17,6 +17,10 @@ export enum NODE_ENV {
   test = 'test',
 }
 
+export interface ICsrfConfig {
+  responseHeader: string;
+  cookieKey: string;
+}
 export interface IEnvConfig {
   env: NODE_ENV;
   port: number;
@@ -24,6 +28,8 @@ export interface IEnvConfig {
   mongoUri: string;
   prices: IPrices;
   host: string;
+  csrf: ICsrfConfig;
+  cookieSecret: string;
 }
 
 export type BaseEnvVarNameType =
@@ -36,7 +42,12 @@ export type BaseEnvVarNameType =
   | 'MONGO_URI'
   | 'MONGO_URI_PARAMS'
   | 'HOST'
-  | 'TF_PRICE_PRECISION';
+  | 'TF_PRICE_PRECISION'
+  | 'GOOGLE_CLIENT_ID'
+  | 'GOOGLE_CLIENT_SECRET'
+  | 'XSRF_HEADER_NAME'
+  | 'XSRF_TOKEN_NAME'
+  | 'COOKIE_SECRET';
 
 export type NodeEvnVarType = Record<'NODE_ENV', NODE_ENV>;
 

@@ -1,5 +1,6 @@
 import {
   EnvVarsType,
+  ICsrfConfig,
   IDatabaseConf,
   IEnvConfig,
   IPrices,
@@ -13,6 +14,10 @@ export class ConfigDto implements IEnvConfig {
   mongoUri: string;
   env: NODE_ENV;
   host: string;
+  googleClientId: string;
+  googleSecretId: string;
+  csrf: ICsrfConfig;
+  cookieSecret: string;
 
   constructor(env: EnvVarsType) {
     this.host = env.HOST;
@@ -31,6 +36,13 @@ export class ConfigDto implements IEnvConfig {
       : `${env.MONGO_PROTOCOL}://${env.MONGO_USER}:${env.MONGO_PASSWORD}@${env.MONGO_URI}/${env.MONGO_DB}?${env.MONGO_URI_PARAMS}`;
     this.prices = {
       precision: Number.parseInt(env.TF_PRICE_PRECISION),
+    };
+    this.googleClientId = env.GOOGLE_CLIENT_ID;
+    this.googleSecretId = env.GOOGLE_CLIENT_SECRET;
+    this.cookieSecret = env.COOKIE_SECRET;
+    this.csrf = {
+      responseHeader: env.XSRF_HEADER_NAME,
+      cookieKey: env.XSRF_TOKEN_NAME,
     };
   }
 }

@@ -5,11 +5,10 @@ import { MenuModule } from './resto/v1/menu/menu.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MenuItemModule } from './resto/v1/menu-item/menu-item.module';
 import { MenuGroupModule } from './resto/v1/menu-group/menu-group.module';
-// import {  ConfigService } from '@nestjs/config';
-// import configuration from './config/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.register({
@@ -28,6 +27,7 @@ import { ConfigService } from './config/config.service';
     MenuItemModule,
     MenuGroupModule,
     ConfigModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

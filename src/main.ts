@@ -10,16 +10,41 @@ import { MenuModule } from './resto/v1/menu/menu.module';
 import { MenuGroupModule } from './resto/v1/menu-group/menu-group.module';
 import { MenuItemModule } from './resto/v1/menu-item/menu-item.module';
 import { fastifyHelmet as helmet } from '@fastify/helmet';
+import fastifyCookie from '@fastify/cookie';
+import fastifyCsrf from '@fastify/csrf-protection';
 
 async function bootstrap() {
+  const adapter = new FastifyAdapter({ logger: true });
+  adapter.enableCors({
+    origin: ['http://localhost:4200'],
+    methods: ['GET', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
+    credentials: true,
+  });
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter({ logger: true }),
+    adapter,
   );
-
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore mismatch interface
+  await app.register(fastifyCookie, {
+    secret: process.env.COOKIE_SECRET, // for cookies signature
+    parseOptions: {
+      sameSite: true,
+      secure: true,
+      httpOnly: true,
+    },
+    hook: 'onRequest',
+  });
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore mismatch interface
   await app.register(helmet, { global: true });
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore mismatch interface
+  await app.register(fastifyCsrf, {
+    cookieOpts: { signed: true },
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
