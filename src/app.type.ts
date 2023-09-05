@@ -5,6 +5,7 @@ export type HttpMethodType =
   | 'DELETE'
   | 'OPTIONS'
   | 'HEAD';
+
 export const HttpMethod = {
   GET: 'GET',
   POST: 'POST',
@@ -24,4 +25,5 @@ export const ERROR_CODE = {
   CSRF_CHECK_FAILED: 403001,
   GOOGLE_UNVERIFIED_EMAIL: 403002,
   GOOGLE_VERIFICATION_FAILED: 403003,
+  INVALID_GOOGLE_ID_TOKEN: 403004,
 } as const;

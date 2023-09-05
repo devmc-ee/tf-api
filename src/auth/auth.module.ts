@@ -4,8 +4,10 @@ import { AuthService } from './auth.service';
 import { GoogleAuthService } from './google-auth/google-auth.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CsrfInterceptor } from './interceptors/csrf.interceptor';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
+  imports: [HttpModule],
   controllers: [AuthController],
   providers: [
     AuthService,

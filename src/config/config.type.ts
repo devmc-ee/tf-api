@@ -21,6 +21,7 @@ export interface ICsrfConfig {
   responseHeader: string;
   cookieKey: string;
 }
+
 export interface IEnvConfig {
   env: NODE_ENV;
   port: number;
@@ -30,6 +31,8 @@ export interface IEnvConfig {
   host: string;
   csrf: ICsrfConfig;
   cookieSecret: string;
+  serviceToken: string;
+  authServiceUrl: string;
 }
 
 export type BaseEnvVarNameType =
@@ -47,7 +50,9 @@ export type BaseEnvVarNameType =
   | 'GOOGLE_CLIENT_SECRET'
   | 'XSRF_HEADER_NAME'
   | 'XSRF_TOKEN_NAME'
-  | 'COOKIE_SECRET';
+  | 'COOKIE_SECRET'
+  | 'SERVICE_TOKEN'
+  | 'AUTH_SERVICE_URL';
 
 export type NodeEvnVarType = Record<'NODE_ENV', NODE_ENV>;
 

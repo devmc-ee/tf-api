@@ -15,8 +15,8 @@ down:
 	docker-compose down --remove-orphans
 
 clear: 
-	docker container prune -f
-	docker volume prune -f
+	-mkdir .mongo_db 
+	-mkdir node_modules
 	-docker volume rm tf_api_app
 	-docker volume rm tf_api_mongo_db
 	-docker volume rm tf_api_node_modules

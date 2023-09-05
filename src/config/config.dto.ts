@@ -18,6 +18,8 @@ export class ConfigDto implements IEnvConfig {
   googleSecretId: string;
   csrf: ICsrfConfig;
   cookieSecret: string;
+  serviceToken: string;
+  authServiceUrl: string;
 
   constructor(env: EnvVarsType) {
     this.host = env.HOST;
@@ -44,5 +46,7 @@ export class ConfigDto implements IEnvConfig {
       responseHeader: env.XSRF_HEADER_NAME,
       cookieKey: env.XSRF_TOKEN_NAME,
     };
+    this.serviceToken = env.SERVICE_TOKEN;
+    this.authServiceUrl = env.AUTH_SERVICE_URL;
   }
 }

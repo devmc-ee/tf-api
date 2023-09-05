@@ -1,28 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { GoogleAuthService } from './google-auth/google-auth.service';
 import Tokens, { TokensSimple } from '@fastify/csrf';
-import { FastifyRequest } from 'fastify';
+import { HttpService } from '@nestjs/axios';
+import { ConfigService } from 'src/config/config.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthService {
+  public AUTH_WITH_GOOGLE_URL = '/v1/auth/google';
+
   private csrfSecret: { [token: string]: string } = {};
   private readonly csrfService: TokensSimple;
 
-  constructor(private readonly googleAuthService: GoogleAuthService) {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly httpService: HttpService,
+  ) {
     this.csrfService = new Tokens({});
   }
 
-  async auth(token: string, ctx: FastifyRequest) {
-    const payload = await this.googleAuthService.verify(token, ctx);
+  async authUserWithGoogle(idToken: string) {
+    return await firstValueFrom(
+      this.httpService.post(
+        this.getAuthWithGoogleUrl(),
+        {
+          idToken,
+        },
+        {
+          headers: {
+            'service-token': `Bearer ${this.configService.config.serviceToken}`,
+          },
+        },
+      ),
+    );
+  }
 
-    // has email
-
-    // get access token
-    
+  getAuthWithGoogleUrl(): string {
+    return `${this.configService.config.authServiceUrl}${this.AUTH_WITH_GOOGLE_URL}`;
   }
 
   generateCsrf(): string {
-    // TDOD: move to auth micro service
     const secret = this.csrfService.secretSync();
     const token = this.csrfService.create(secret);
 
