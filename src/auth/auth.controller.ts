@@ -14,17 +14,11 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import { AuthService } from './auth.service';
 import { CsrfGuard } from './guards/csrf.guard';
 import { ERROR_CODE } from 'src/app.type';
-import { HttpService } from '@nestjs/axios';
-import { ConfigService } from 'src/config/config.service';
 import { HttpStatusCode } from 'axios';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
   @Post()
   @UseGuards(CsrfGuard)
   async checkIdToken(

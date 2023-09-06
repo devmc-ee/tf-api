@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthService {
-  public AUTH_WITH_GOOGLE_URL = '/v1/auth/google';
+  public AUTH_WITH_GOOGLE_URL = '';
 
   private csrfSecret: { [token: string]: string } = {};
   private readonly csrfService: TokensSimple;
@@ -16,12 +16,13 @@ export class AuthService {
     private readonly httpService: HttpService,
   ) {
     this.csrfService = new Tokens({});
+    this.AUTH_WITH_GOOGLE_URL = `${configService.config.authServiceUrl}/v1/auth/google`;
   }
 
   async authUserWithGoogle(idToken: string) {
     return await firstValueFrom(
       this.httpService.post(
-        this.getAuthWithGoogleUrl(),
+        this.AUTH_WITH_GOOGLE_URL,
         {
           idToken,
         },
@@ -32,10 +33,6 @@ export class AuthService {
         },
       ),
     );
-  }
-
-  getAuthWithGoogleUrl(): string {
-    return `${this.configService.config.authServiceUrl}${this.AUTH_WITH_GOOGLE_URL}`;
   }
 
   generateCsrf(): string {
