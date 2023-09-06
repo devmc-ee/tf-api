@@ -30,7 +30,7 @@ async function bootstrap() {
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET, // for cookies signature
     parseOptions: {
-      sameSite: true,
+      sameSite: false,
       secure: true,
       httpOnly: true,
     },
