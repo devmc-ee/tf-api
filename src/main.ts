@@ -16,7 +16,11 @@ import fastifyCsrf from '@fastify/csrf-protection';
 async function bootstrap() {
   const adapter = new FastifyAdapter({ logger: true });
   adapter.enableCors({
-    origin: ['http://localhost:4200'],
+    origin: [
+      'http://localhost:4200',
+      'http://localhost:5500',
+      'https://bo.thaifood.ee',
+    ],
     methods: ['GET', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
   });
