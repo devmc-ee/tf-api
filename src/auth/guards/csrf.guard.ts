@@ -38,7 +38,7 @@ export class CsrfGuard implements CanActivate {
 
     if (!isValid) {
       request.log.error(
-        { errorCode: ERROR_CODE.CSRF_CHECK_FAILED },
+        { errorCode: ERROR_CODE.CSRF_CHECK_FAILED, token },
         'ERROR_CODE.CSRF_CHECK_FAILED',
       );
 
