@@ -71,6 +71,7 @@ async function bootstrap() {
   });
   SwaggerModule.setup('resto/v1/docs', app, document);
 
+  console.log(process.env);
   await app.listen(Number.parseInt(process.env.PORT) || 5003, process.env.HOST);
 }
 bootstrap();
