@@ -30,7 +30,7 @@ async function bootstrap() {
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET, // for cookies signature
     parseOptions: {
-      domain: 'thaifood.ee',
+      domain: 'bo.thaifood.ee',
       sameSite: 'none',
       secure: true,
       httpOnly: false,
