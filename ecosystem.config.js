@@ -27,7 +27,7 @@ module.exports = module.exports = {
       ssh_options: 'ForwardAgent=yes',
       'pre-deploy-local': '',
       'post-deploy':
-        'npm install && npm run build && pm2 reload ecosystem.config.js --env production',
+        'npm install && npm run build && pm2 reload ecosystem.config.js production',
       'pre-setup': '',
     },
   },

@@ -16,11 +16,7 @@ import fastifyCsrf from '@fastify/csrf-protection';
 async function bootstrap() {
   const adapter = new FastifyAdapter({ logger: true });
   adapter.enableCors({
-    origin: [
-      'http://localhost:4200',
-      'http://localhost:5500',
-      'https://bo.thaifood.ee',
-    ],
+    origin: ['https://bo.thaifood.ee'],
     methods: ['GET', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
   });
@@ -71,7 +67,6 @@ async function bootstrap() {
   });
   SwaggerModule.setup('resto/v1/docs', app, document);
 
-  console.log(process.env);
   await app.listen(Number.parseInt(process.env.PORT) || 5003, process.env.HOST);
 }
 bootstrap();
