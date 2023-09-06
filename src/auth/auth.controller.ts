@@ -7,12 +7,10 @@ import {
   Post,
   Req,
   Res,
-  UseGuards,
 } from '@nestjs/common';
 import { CheckIdTokenDto } from './dtos/check-id-token.dto';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AuthService } from './auth.service';
-import { CsrfGuard } from './guards/csrf.guard';
 import { ERROR_CODE } from 'src/app.type';
 import { HttpStatusCode } from 'axios';
 
@@ -20,7 +18,7 @@ import { HttpStatusCode } from 'axios';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post()
-  @UseGuards(CsrfGuard)
+  // @UseGuards(CsrfGuard)
   async checkIdToken(
     @Body() checkIdTokeDto: CheckIdTokenDto,
     @Req() req: FastifyRequest,
