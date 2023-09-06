@@ -32,7 +32,7 @@ async function bootstrap() {
     parseOptions: {
       sameSite: false,
       secure: true,
-      httpOnly: true,
+      httpOnly: false,
     },
     hook: 'onRequest',
   });
