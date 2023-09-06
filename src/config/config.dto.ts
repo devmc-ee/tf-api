@@ -39,8 +39,6 @@ export class ConfigDto implements IEnvConfig {
     this.prices = {
       precision: Number.parseInt(env.TF_PRICE_PRECISION),
     };
-    this.googleClientId = env.GOOGLE_CLIENT_ID;
-    this.googleSecretId = env.GOOGLE_CLIENT_SECRET;
     this.cookieSecret = env.COOKIE_SECRET;
     this.csrf = {
       responseHeader: env.XSRF_HEADER_NAME,

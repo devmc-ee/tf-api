@@ -46,8 +46,6 @@ export type BaseEnvVarNameType =
   | 'MONGO_URI_PARAMS'
   | 'HOST'
   | 'TF_PRICE_PRECISION'
-  | 'GOOGLE_CLIENT_ID'
-  | 'GOOGLE_CLIENT_SECRET'
   | 'XSRF_HEADER_NAME'
   | 'XSRF_TOKEN_NAME'
   | 'COOKIE_SECRET'
