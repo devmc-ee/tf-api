@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Head,
   HttpException,
   HttpStatus,
   Post,
@@ -63,10 +62,5 @@ export class AuthController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-  }
-
-  @Head()
-  async getCsrf(@Res({ passthrough: true }) res: FastifyReply) {
-    res.log.info({ res: res.cookies });
   }
 }

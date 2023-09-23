@@ -6,12 +6,16 @@ import {
   HttpException,
   HttpStatus,
   Request,
+  Patch,
+  Param,
+  Delete,
 } from '@nestjs/common';
 import { MenuGroupService } from './menu-group.service';
 import { CreateMenuGroupDto } from './dtos/create-menu-group.dto';
 import { ResponseMenuGroupDto } from './dtos/response-menu-group.dto';
 import { FastifyRequest } from 'fastify';
 import { ApiResponse } from '@nestjs/swagger';
+import { UpdateMenuGroupDto } from './dtos/update-menu-group.dto';
 
 @Controller('resto/v1/menu-groups')
 export class MenuGroupController {
@@ -47,5 +51,31 @@ export class MenuGroupController {
   @Get()
   findAll(): Promise<ResponseMenuGroupDto[]> {
     return this.menuGroupService.findAll();
+  }
+
+  @ApiResponse({
+    status: 200,
+    description: '',
+    type: ResponseMenuGroupDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  @Patch(':id')
+  async update(
+    @Body() updateMenuGroupDto: UpdateMenuGroupDto,
+    @Param('id') id: string,
+  ): Promise<ResponseMenuGroupDto> {
+    return await this.menuGroupService.update(id, updateMenuGroupDto);
+  }
+
+  @ApiResponse({
+    status: 200,
+    description: '',
+  })
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<void> {
+    return await this.menuGroupService.remove(id);
   }
 }

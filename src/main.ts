@@ -16,7 +16,10 @@ import fastifyCsrf from '@fastify/csrf-protection';
 async function bootstrap() {
   const adapter = new FastifyAdapter({ logger: true });
   adapter.enableCors({
-    origin: ['https://bo.thaifood.ee'],
+    origin: [
+      'https://bo.thaifood.ee',
+      process.env.NODE_ENV === 'dev' ? 'http://localhost:4200' : '',
+    ],
     methods: ['GET', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
   });
@@ -30,7 +33,6 @@ async function bootstrap() {
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET, // for cookies signature
     parseOptions: {
-      domain: 'milicity.eu',
       sameSite: 'none',
       secure: true,
       httpOnly: false,

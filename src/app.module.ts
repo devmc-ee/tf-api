@@ -12,7 +12,9 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.register({
-      envFilePath: `./.env.${process.env.NODE_ENV || 'dev'}`,
+      envFilePath: `./.env.${process.env.NODE_ENV || 'dev'}${
+        process.env.NODE_ENV === 'dev' ? '.local' : ''
+      }`,
     }),
     MenuModule,
     MongooseModule.forRootAsync({
