@@ -9,6 +9,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 import { AuthModule } from './auth/auth.module';
+import { WorkingTimeModule } from './resto/v1/working-time/working-time.module';
 @Module({
   imports: [
     ConfigModule.register({
@@ -30,6 +31,7 @@ import { AuthModule } from './auth/auth.module';
     MenuGroupModule,
     ConfigModule,
     AuthModule,
+    WorkingTimeModule,
   ],
   controllers: [AppController],
   providers: [

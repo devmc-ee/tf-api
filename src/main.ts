@@ -12,6 +12,7 @@ import { MenuItemModule } from './resto/v1/menu-item/menu-item.module';
 import { fastifyHelmet as helmet } from '@fastify/helmet';
 import fastifyCookie from '@fastify/cookie';
 import fastifyCsrf from '@fastify/csrf-protection';
+import { WorkingTimeModule } from './resto/v1/working-time/working-time.module';
 
 async function bootstrap() {
   const adapter = new FastifyAdapter({ logger: true });
@@ -66,7 +67,7 @@ async function bootstrap() {
     .addTag('resto')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig, {
-    include: [MenuModule, MenuGroupModule, MenuItemModule],
+    include: [MenuModule, MenuGroupModule, MenuItemModule, WorkingTimeModule],
   });
   SwaggerModule.setup('resto/v1/docs', app, document);
 
