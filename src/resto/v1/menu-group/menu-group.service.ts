@@ -23,7 +23,7 @@ export class MenuGroupService {
     return new ResponseMenuGroupDto(newMenuGroup.toObject());
   }
 
-  async update(id: string, updateMenuGroupDto: UpdateMenuGroupDto) { console.log({updateMenuGroupDto})
+  async update(id: string, updateMenuGroupDto: UpdateMenuGroupDto) {
     const menuGroup = await this.menuGroupModel
       .updateOne({ _id: id }, updateMenuGroupDto)
       .exec();

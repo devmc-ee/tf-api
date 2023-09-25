@@ -15,31 +15,34 @@ export class MenuService {
     private readonly menuGroupModel: Model<MenuGroup>,
     private configService: ConfigService,
   ) {}
-  async findAll() {
+
+  async findAll(emptyGroups = false) {
     const menuGroups = await this.menuGroupModel.find().exec();
     const menuItems = await this.menuItemModel.find().exec();
 
-    return menuGroups
-      .map((group) => {
-        const filteredItems = menuItems
-          .filter(({ groupId, hidden }) => {
-            return groupId.toString() === group._id.toString() && !hidden;
-          })
-          .map((item) => {
-            const menuItem = item.toObject();
+    const menuList = menuGroups.map((group) => {
+      const filteredItems = menuItems
+        .filter(({ groupId, hidden }) => {
+          return groupId.toString() === group._id.toString() && !hidden;
+        })
+        .map((item) => {
+          const menuItem = item.toObject();
 
-            menuItem.price = Number.parseFloat(menuItem.price).toFixed(
-              this.configService.config.prices.precision,
-            );
+          menuItem.price = Number.parseFloat(menuItem.price).toFixed(
+            this.configService.config.prices.precision,
+          );
 
-            return new ResponseMenuItemDto(menuItem);
-          });
-
-        return new ResponseMenuDto({
-          ...group.toObject(),
-          items: filteredItems,
+          return new ResponseMenuItemDto(menuItem);
         });
-      })
-      .filter(({ items }) => items.length > 0);
+
+      return new ResponseMenuDto({
+        ...group.toObject(),
+        items: filteredItems,
+      });
+    });
+
+    return !emptyGroups
+      ? menuList.filter(({ items }) => items.length > 0)
+      : menuList;
   }
 }
