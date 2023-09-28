@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateMenuItemDto } from './dtos/create-menu-item.dto';
 import { UpdateMenuItemDto } from './dtos/update.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -7,6 +7,7 @@ import { Model } from 'mongoose';
 import { ResponseMenuItemDto } from './dtos/response-menu-item.dto';
 import { IMenuItemResponse } from './menu-item.type';
 import { ConfigService } from 'src/config/config.service';
+import { ERROR_CODE } from 'src/app.type';
 
 @Injectable()
 export class MenuItemService {
@@ -38,12 +39,21 @@ export class MenuItemService {
     return `This action returns a #${id} menuItem`;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update(id: number, updateMenuItemDto: UpdateMenuItemDto) {
-    return `This action updates a #${id} menuItem`;
+  async update(id: string, updateMenuItemDto: UpdateMenuItemDto) {
+    const menuItem = await this.menuItemModel
+      .findOneAndUpdate({ _id: id }, updateMenuItemDto)
+      .exec();
+    return new ResponseMenuItemDto(menuItem.toObject());
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} menuItem`;
+  async remove(id: string) {
+    const menuItem = await this.menuItemModel.deleteOne({ _id: id }).exec();
+
+    if (!menuItem.deletedCount) {
+      throw new HttpException(
+        `Menu group not found, ${ERROR_CODE.MENU_ITEM_NOT_FOUND}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 }

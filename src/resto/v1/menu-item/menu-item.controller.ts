@@ -6,12 +6,16 @@ import {
   Req,
   HttpException,
   HttpStatus,
+  Patch,
+  Param,
+  Delete,
 } from '@nestjs/common';
 import { MenuItemService } from './menu-item.service';
 import { CreateMenuItemDto } from './dtos/create-menu-item.dto';
 import { FastifyRequest } from 'fastify';
 import { ApiResponse } from '@nestjs/swagger';
 import { ResponseMenuItemDto } from './dtos/response-menu-item.dto';
+import { UpdateMenuItemDto } from './dtos/update.dto';
 
 @Controller('resto/v1/menu-items')
 export class MenuItemController {
@@ -38,6 +42,36 @@ export class MenuItemController {
         error.code === 11000 ? HttpStatus.CONFLICT : HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  @ApiResponse({
+    status: 200,
+    description: '',
+    type: ResponseMenuItemDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  @Patch(':id')
+  async update(
+    @Body() updateMenuItemDto: UpdateMenuItemDto,
+    @Param('id') id: string,
+  ): Promise<ResponseMenuItemDto> {
+    return await this.menuItemService.update(id, updateMenuItemDto);
+  }
+
+  @ApiResponse({
+    status: 200,
+    description: '',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<void> {
+    return await this.menuItemService.remove(id);
   }
 
   @ApiResponse({
