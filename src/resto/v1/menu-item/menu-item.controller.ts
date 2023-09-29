@@ -9,6 +9,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { MenuItemService } from './menu-item.service';
 import { CreateMenuItemDto } from './dtos/create-menu-item.dto';
@@ -16,7 +17,9 @@ import { FastifyRequest } from 'fastify';
 import { ApiResponse } from '@nestjs/swagger';
 import { ResponseMenuItemDto } from './dtos/response-menu-item.dto';
 import { UpdateMenuItemDto } from './dtos/update.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('resto/v1/menu-items')
 export class MenuItemController {
   constructor(private readonly menuItemService: MenuItemService) {}

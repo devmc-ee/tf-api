@@ -6,12 +6,14 @@ import {
   HttpStatus,
   Param,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { ResponseWorkingTimeDto } from './dto/response-working-time.dto';
 import { WorkingTimeService } from './working-time.service';
 import { UpdateWorkingTimeDto } from './dto/update-working-time.dto';
 import { ERROR_CODE } from 'src/app.type';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('resto/v1/working-time')
 export class WorkingTimeController {
@@ -26,6 +28,7 @@ export class WorkingTimeController {
     return await this.workingTimeService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @ApiResponse({
     status: 200,
     description: '',

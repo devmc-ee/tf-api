@@ -9,6 +9,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { MenuGroupService } from './menu-group.service';
 import { CreateMenuGroupDto } from './dtos/create-menu-group.dto';
@@ -16,7 +17,9 @@ import { ResponseMenuGroupDto } from './dtos/response-menu-group.dto';
 import { FastifyRequest } from 'fastify';
 import { ApiResponse } from '@nestjs/swagger';
 import { UpdateMenuGroupDto } from './dtos/update-menu-group.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('resto/v1/menu-groups')
 export class MenuGroupController {
   constructor(private readonly menuGroupService: MenuGroupService) {}
