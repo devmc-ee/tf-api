@@ -8,11 +8,13 @@ export enum WeekDay {
   Sunday = 'sunday',
 }
 
-export interface IWeekdayWorkingData {
-  index: number;
+export interface IWorkingTimeBase {
   isOpen: boolean;
   start: string;
   end: string;
   comment: string;
+}
+export interface IWeekdayWorkingData extends IWorkingTimeBase {
+  index: number;
   weekday: WeekDay;
 }

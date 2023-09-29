@@ -3,6 +3,7 @@ import { ResponseWorkingTimeDto } from './dto/response-working-time.dto';
 import { WorkingTime } from './entities/working-time.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { UpdateWorkingTimeDto } from './dto/update-working-time.dto';
 
 @Injectable()
 export class WorkingTimeService {
@@ -15,5 +16,13 @@ export class WorkingTimeService {
     return workingTimes.map(
       (workingTime) => new ResponseWorkingTimeDto(workingTime.toObject()),
     );
+  }
+
+  async update(id: string, updateWorkingTimeDto: UpdateWorkingTimeDto) {
+    const workingTime = await this.workingTimeModel
+      .findOneAndUpdate({ _id: id }, updateWorkingTimeDto)
+      .exec();
+
+    return new ResponseWorkingTimeDto(workingTime.toObject());
   }
 }

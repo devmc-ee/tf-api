@@ -17,7 +17,6 @@ import { HttpStatusCode } from 'axios';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post()
-  // @UseGuards(CsrfGuard)
   async checkIdToken(
     @Body() checkIdTokeDto: CheckIdTokenDto,
     @Req() req: FastifyRequest,

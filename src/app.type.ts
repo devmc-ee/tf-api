@@ -22,6 +22,7 @@ export const HttpMutationMethods: HttpMethodType[] = [
 ];
 
 export const ERROR_CODE = {
+  VALIDATION_ERROR: 400001,
   CSRF_CHECK_FAILED: 403001,
   GOOGLE_UNVERIFIED_EMAIL: 403002,
   GOOGLE_VERIFICATION_FAILED: 403003,
