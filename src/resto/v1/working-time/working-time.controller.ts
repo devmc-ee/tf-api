@@ -55,9 +55,6 @@ export class WorkingTimeController {
           HttpStatus.BAD_REQUEST,
         );
       }
-    } else {
-      updateWorkingTimeDto.start = '';
-      updateWorkingTimeDto.end = '';
     }
 
     return await this.workingTimeService.update(id, updateWorkingTimeDto);
