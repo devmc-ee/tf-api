@@ -5,13 +5,15 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { AxiosError } from 'axios';
+import { FastifyRequest } from 'fastify';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private readonly authService: AuthService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest() as FastifyRequest;
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
@@ -23,14 +25,16 @@ export class AuthGuard implements CanActivate {
 
       return true;
     } catch (error) {
-      request.log.error(error, 'access token verification failed');
-      throw new UnauthorizedException();
+      request.log.error(
+        (error as AxiosError).response,
+        'access token verification failed',
+      );
+
+      throw new UnauthorizedException((error as AxiosError).response.data);
     }
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore authorization header
+  private extractTokenFromHeader(request: FastifyRequest): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }

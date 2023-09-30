@@ -62,4 +62,22 @@ export class AuthController {
       );
     }
   }
+
+  @Post('refresh-token')
+  async refreshToken(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
+    req.log.info(req.cookies, 'REFRESH TOKEN');
+
+    if (!req.cookies['refresh-token']) {
+      throw new HttpException('Invalid refresh token', HttpStatus.BAD_REQUEST);
+    }
+
+    const refreshToken = req.cookies['refresh-token'];
+    try {
+      const { data } = await this.authService.refreshToken(refreshToken);
+
+      return res.code(HttpStatus.CREATED).send(data);
+    } catch (error) {
+      throw new HttpException('Something went wrong', HttpStatus.BAD_REQUEST);
+    }
+  }
 }
