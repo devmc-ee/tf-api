@@ -6,6 +6,7 @@ import { MenuGroup } from '../menu-group/entities/menu-group.schema';
 import { ResponseMenuItemDto } from '../menu-item/dtos/response-menu-item.dto';
 import { ResponseMenuDto } from './dto/response-menu.dto';
 import { ConfigService } from 'src/config/config.service';
+import { ResponseMenuItemAdminDto } from '../menu-item/dtos/response-menu-item-admin.dto';
 
 @Injectable()
 export class MenuService {
@@ -16,14 +17,16 @@ export class MenuService {
     private configService: ConfigService,
   ) {}
 
-  async findAll(emptyGroups = false) {
+  async findAll(all = false) {
     const menuGroups = await this.menuGroupModel.find().exec();
     const menuItems = await this.menuItemModel.find().exec();
 
     const menuList = menuGroups.map((group) => {
       const filteredItems = menuItems
         .filter(({ groupId, hidden }) => {
-          return groupId.toString() === group._id.toString() && !hidden;
+          return (
+            groupId.toString() === group._id.toString() && (all || !hidden)
+          );
         })
         .map((item) => {
           const menuItem = item.toObject();
@@ -32,7 +35,9 @@ export class MenuService {
             this.configService.config.prices.precision,
           );
 
-          return new ResponseMenuItemDto(menuItem);
+          return all
+            ? new ResponseMenuItemAdminDto(menuItem)
+            : new ResponseMenuItemDto(menuItem);
         });
 
       return new ResponseMenuDto({
@@ -41,8 +46,6 @@ export class MenuService {
       });
     });
 
-    return !emptyGroups
-      ? menuList.filter(({ items }) => items.length > 0)
-      : menuList;
+    return !all ? menuList.filter(({ items }) => items.length > 0) : menuList;
   }
 }

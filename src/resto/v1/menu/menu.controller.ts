@@ -13,9 +13,7 @@ export class MenuController {
     type: [ResponseMenuDto],
   })
   @Get()
-  async findAll(
-    @Query('empty-groups') emptyGroups: boolean,
-  ): Promise<ResponseMenuDto[]> {
-    return await this.menuService.findAll(emptyGroups);
+  async findAll(@Query('all') all: boolean): Promise<ResponseMenuDto[]> {
+    return await this.menuService.findAll(all);
   }
 }
