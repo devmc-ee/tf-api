@@ -27,6 +27,11 @@ export class ResponseMenuItemAdminDto implements IMenuItemResponse {
   groupId: string;
   @ApiProperty()
   hidden: boolean;
+  @ApiProperty({
+    description: 'Public id',
+  })
+  image: string;
+
   @Exclude()
   createdAt: string;
   @Exclude()

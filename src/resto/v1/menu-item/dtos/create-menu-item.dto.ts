@@ -41,4 +41,8 @@ export class CreateMenuItemDto implements IMenuItemRequest {
   @ApiProperty()
   @IsString()
   groupId: string;
+
+  @ApiProperty()
+  @IsString()
+  image: string;
 }

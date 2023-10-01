@@ -29,6 +29,8 @@ export class MenuItem implements IMenuItemModel {
     ref: MODEL_NAME.MENU_GROUP,
   })
   groupId: ObjectId;
+  @Prop()
+  image: string;
 }
 
 export const MenuItemSchema = SchemaFactory.createForClass(MenuItem);

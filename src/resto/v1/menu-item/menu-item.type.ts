@@ -6,6 +6,7 @@ export interface IMenuIteBase {
   soldOut: boolean;
   price: string;
   code: string;
+  image: string;
 }
 
 export interface IMenuItemModel extends IMenuIteBase {

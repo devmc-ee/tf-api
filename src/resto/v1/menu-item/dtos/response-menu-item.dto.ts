@@ -26,6 +26,11 @@ export class ResponseMenuItemDto implements IMenuItemResponse {
   @ApiProperty()
   groupId: string;
 
+  @ApiProperty({
+    description: 'Public id',
+  })
+  image: string;
+
   @Exclude()
   hidden: boolean;
   @Exclude()
